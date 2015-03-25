@@ -26,7 +26,14 @@
 
 //boost
 #include <boost/filesystem.hpp>
+
+//Qt
+#if QT_VERSION >5
+#include <QFileDialog>
+#else
 #include <qt4/QtGui/qfiledialog.h>
+#endif
+
 
 #include <pcl/common/transforms.h>
 //Default constructor: should mainly be used to initialize
@@ -85,7 +92,7 @@ void qDataFramework::doActionExport()
     boost::filesystem::path folderPath = filePath/("data_cc");
     
     boost::filesystem::create_directories(folderPath);
-    m_app->dispToConsole("[qDataFramework] created folder :"+QString::fromStdString(folderPath.c_str()),ccMainAppInterface::STD_CONSOLE_MESSAGE);
+    m_app->dispToConsole("[qDataFramework] created folder :"+QString::fromStdString(folderPath.string()),ccMainAppInterface::STD_CONSOLE_MESSAGE);
     
     data_model savingModel;
     std::vector<ccPointCloud*> pointcloudCollection;
@@ -102,7 +109,7 @@ void qDataFramework::doActionExport()
         savingModel.setPointcloudName(id, fn);
         
         boost::filesystem::path fullPath = folderPath/fn;
-        fromCCtoPCL(fullPath.c_str(), pointcloudCollection[i]);
+        fromCCtoPCL(fullPath.string(), pointcloudCollection[i]);
     }
     savingModel.setDataSetPath("data_cc");
     savingModel.saveFile(datasetName.toStdString());

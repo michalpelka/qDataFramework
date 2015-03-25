@@ -27,7 +27,9 @@
 
 	bool data_model::saveFile(std::string fn)
     {
-        boost::property_tree::write_xml(fn, pt_, std::locale(), boost::property_tree::xml_writer_make_settings<char>(' ', 1u));
+        boost::property_tree::write_xml(fn, pt_, std::locale(), boost::property_tree::xml_writer_make_settings<std::string>(' ', 1u));
+
+//        boost::property_tree::write_xml(fn, pt_, std::locale(), boost::property_tree::xml_writer_make_settings<char>(' ', 1u));
 		xmlPath = boost::filesystem::path(fn);
 		return true;
 	}
